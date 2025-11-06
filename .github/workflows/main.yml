@@ -1,4 +1,4 @@
-name: 🚀 Deploy Static Site to AWS S3
+name: 🚀 Host Static Site to AWS S3
 
 on:
   push:
