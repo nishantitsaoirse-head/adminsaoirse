@@ -92,7 +92,7 @@
 .image-preview-item.primary {
     border-color: #667eea;
     border-width: 3px;
-    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 0 10px rgb(102 126 234 / 30%);
 }
 
 .image-preview-item img {
@@ -106,7 +106,7 @@
     position: absolute;
     top: 2px;
     right: 2px;
-    background: rgba(255, 0, 0, 0.8);
+    background: rgb(255 0 0 / 80%);
     color: white;
     border: none;
     border-radius: 50%;
@@ -121,14 +121,14 @@
 }
 
 .image-preview-item .remove-image:hover {
-    background: rgba(255, 0, 0, 1);
+    background: rgb(255 0 0 / 100%);
 }
 
 .image-preview-item .set-primary {
     position: absolute;
     bottom: 2px;
     left: 2px;
-    background: rgba(102, 126, 234, 0.9);
+    background: rgb(102 126 234 / 90%);
     color: white;
     border: none;
     border-radius: 3px;
@@ -139,7 +139,7 @@
 }
 
 .image-preview-item .set-primary:hover {
-    background: rgba(102, 126, 234, 1);
+    background: rgb(102 126 234 / 100%);
 }
 
 /* Breadcrumb Badge */
@@ -159,7 +159,7 @@
 
 .category-stats .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgb(0 0 0 / 10%);
 }
 
 /* Filter Section */
@@ -190,7 +190,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgb(255 255 255 / 80%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -207,8 +207,12 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Category Modal Customizations */
@@ -236,7 +240,7 @@
 
 /* Action Buttons in Category Items */
 .category-actions .btn-group {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
 }
 
 .category-actions .btn {
@@ -253,7 +257,7 @@
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .category-tree .subcategories {
         padding-left: 15px;
     }
@@ -296,7 +300,7 @@
 }
 
 /* Animations */
-@keyframes fadeIn {
+@keyframes fade-in {
     from {
         opacity: 0;
         transform: translateY(10px);
@@ -308,7 +312,7 @@
 }
 
 .category-item {
-    animation: fadeIn 0.3s ease;
+    animation: fade-in 0.3s ease;
 }
 
 /* Badge Styles */
