@@ -11,6 +11,8 @@ jobs:
     env:
       AWS_REGION: ap-south-1
       S3_BUCKET: admin-dashboard-site-prod
+      CUSTOM_DOMAIN: admin.epielio.com
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
