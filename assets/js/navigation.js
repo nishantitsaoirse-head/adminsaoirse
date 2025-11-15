@@ -34,6 +34,25 @@ const NAV_CONFIG = {
             href: 'products.html',
             hrefFromRoot: 'pages/products.html'
         },
+
+        /* ⭐ ADDED — Image Uploader */
+        {
+            id: 'uploader',
+            label: 'Image Uploader',
+            icon: 'bi-image',
+            href: 'uploader.html',
+            hrefFromRoot: 'pages/uploader.html'
+        },
+
+        /* ⭐ ADDED — Coupons (matches pages/coupons.html) */
+        {
+            id: 'coupons',
+            label: 'Coupons',
+            icon: 'bi-ticket-perforated',
+            href: 'coupons.html',
+            hrefFromRoot: 'pages/coupons.html'
+        },
+
         {
             id: 'orders',
             label: 'Orders',
@@ -87,13 +106,27 @@ function getActiveNavItem() {
     const currentPath = window.location.pathname.toLowerCase();
     const currentPage = currentPath.split('/').pop() || 'index.html';
 
-    // Remove query parameters if any
     const cleanPage = currentPage.split('?')[0];
 
-    // Find matching navigation item
+    // Try to find a matching navigation item by filename, href, or id.
     const activeItem = NAV_CONFIG.items.find(item => {
-        const itemPage = item.hrefFromRoot.split('/').pop().split('?')[0];
-        return cleanPage === itemPage || cleanPage === item.href.split('?')[0];
+        // Normalize potential values for comparison
+        const hrefFromRootFile = (item.hrefFromRoot || '').split('/').pop().split('?')[0].toLowerCase();
+        const hrefFile = (item.href || '').split('/').pop().split('?')[0].toLowerCase();
+        const itemId = (item.id || '').toLowerCase();
+
+        // Direct filename match (e.g., 'coupon.html')
+        if (cleanPage === hrefFromRootFile || cleanPage === hrefFile) return true;
+
+        // If the nav item uses an anchor (e.g. '#orders'), match when the URL contains the id
+        if (hrefFile.startsWith('#') || hrefFromRootFile.startsWith('#')) {
+            if (currentPath.includes('/' + itemId) || window.location.hash.replace('#', '') === itemId) return true;
+        }
+
+        // Fallback: match by id if page name contains the id (useful for unconventional filenames)
+        if (cleanPage.includes(itemId) && itemId.length > 0) return true;
+
+        return false;
     });
 
     return activeItem ? activeItem.id : 'dashboard';
@@ -120,7 +153,9 @@ function renderNavigation(containerId = 'sidebar') {
 
                     return `
                         <li class="nav-item">
-                            <a class="nav-link ${isActive ? 'active' : ''}" href="${href}">
+                            <a class="nav-link ${isActive ? 'active' : ''}" 
+                               data-nav-id="${item.id}"
+                               href="${href}">
                                 <i class="bi ${item.icon} me-2"></i>${item.label}
                             </a>
                         </li>
@@ -153,7 +188,6 @@ function renderNavigation(containerId = 'sidebar') {
  * Initialize navigation on page load
  */
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if sidebar exists on this page
     if (document.getElementById('sidebar')) {
         renderNavigation('sidebar');
     }
@@ -173,6 +207,22 @@ function updateActiveNav(itemId) {
         activeLink.classList.add('active');
     }
 }
+
+/* ⭐ SIDEBAR TOGGLE RE-ADDED */
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const main = document.querySelector('.main-content');
+
+    if (toggleBtn && sidebar) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            if (main) {
+                main.classList.toggle('expanded');
+            }
+        });
+    }
+});
 
 // Export functions
 if (typeof window !== 'undefined') {
